@@ -1,0 +1,19 @@
+@(formType: String, stadiumForm: Form[Stadium], partien: List[Partie]) 
+
+@import helper._ 
+
+@main(formType + " Stadium") {
+	<h1>@formType Stadium</h1>
+	@form(routes.StadiumsCtrl.storeStadium()) {
+		<input type="hidden" id="@stadiumForm("sId").id"
+		name="@stadiumForm("sId").name" 
+		value='@stadiumForm("sId").value' />
+	@inputText(stadiumForm("name"))
+	@inputText(field = stadiumForm("location"))
+	@inputText(field = stadiumForm("seats"))
+	@inputText(field = stadiumForm("entries"))
+	@inputText(field = stadiumForm("sponsor"))
+	<input type="submit" value="Save">
+	<a href="@routes.IndexCtrl.getIndex()">Home</a>
+	} 
+}

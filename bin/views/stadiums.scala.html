@@ -1,0 +1,28 @@
+@(stadiums: List[Stadium]) 
+
+@import helper._
+
+@main("Stadiums") {
+<h1>List of Stadiums</h1>
+<a href="@routes.StadiumsCtrl.createStadium()">Create Stadium</a>
+<table>
+	@for(stadium <- stadiums) {
+	<tr>
+		<td>@stadium.name</td>
+		<td>@stadium.location</td>
+		<td>@stadium.seats</td>
+		<td>@stadium.entries</td>
+		<td>@stadium.sponsor</td>
+		<td>@form(routes.StadiumsCtrl.updateStadium(stadium.sId)) { 
+		<input type="submit" value="Update"> }
+		</td>
+		<td>
+			<form action="@routes.StadiumsCtrl.deleteStadium(stadium.sId)">
+				<input type="submit" value="Delete" onclick="return confirm('Do you want to delete this stadium?');">	
+			</form>
+		</td>
+	</tr>
+	}
+</table>
+<a href="@routes.IndexCtrl.getIndex()">Home</a>
+}

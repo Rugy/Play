@@ -1,0 +1,20 @@
+@(formType: String, partieForm: Form[Partie], stadiums: List[Stadium]) 
+
+	@main(formType + " Partie") {
+	
+	<h1>@formType Partie</h1>
+	
+	@helper.form(action = routes.PartienCtrl.storePartie()) {
+	<input type="hidden" id="@partieForm("pId").id"
+		name="@partieForm("pId").name"
+		value='@partieForm("pId").value' />
+	@helper.inputText(partieForm("homeTeam"))
+	@helper.inputText(partieForm("guestTeam"))
+	@helper.inputDate(partieForm("playDate"))
+	@helper.select(partieForm("stadium"), 
+		stadiums.map(stadium => stadium.name -> stadium.name)
+	)
+	<input type="submit" value="Save">
+	} 
+	<a href="@routes.IndexCtrl.getIndex()">Home</a>
+}

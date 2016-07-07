@@ -1,0 +1,90 @@
+@(partien: List[Partie], stadien: List[Stadium], date: String)
+
+@main("Index") {
+<h1>Stadien</h1>
+<a href="@routes.StadiumsCtrl.createStadium()">Create Stadium</a>
+<table>
+	<tr>
+		<th>
+			Name
+		</th>
+		<th>
+			Matches
+		</th>
+		<th>
+			Location
+		</th>
+		<th>
+			Seats
+		</th>
+		<th>
+			Entries
+		</th>
+		<th>
+			Sponsor
+		</th>
+	</tr>
+	@for(stadium <- stadien) {
+		<tr>
+			<td>@stadium.name</td>
+			<td>
+				@for(partie <- partien) {
+					@if(partie.stadium.equals(stadium.name)) {
+						<li>@partie.homeTeam - @partie.guestTeam</li>
+					}
+				}
+			</td>
+			<td>@stadium.location</td>
+			<td>@stadium.seats</td>
+			<td>@stadium.entries</td>
+			<td>@stadium.sponsor</td>
+			<td>@helper.form(action =
+				routes.StadiumsCtrl.updateStadium(stadium.sId)) { <input
+				type="submit" value="Update"> }
+			</td>
+			<td>
+				<form action="@routes.StadiumsCtrl.deleteStadium(stadium.sId)">
+					<input type="submit" value="Delete" onclick="return confirm('Do you want to delete this stadium?');">	
+				</form>
+			</td>
+		</tr>
+	}
+</table>
+<br>
+
+<h2>Partien, next in @date</h2>
+<a href="@routes.PartienCtrl.createPartie()">Create	Partie</a>
+<table>
+	<tr>
+		<th>
+			Home Team
+		</th>
+		<th>
+			Guest Team
+		</th>
+		<th>
+			Play Date
+		</th>
+		<th>
+			Stadium
+		</th>
+	</tr>
+	@for(partie <- partien) {
+		<tr>
+			<td>@partie.homeTeam</td>
+			<td>@partie.guestTeam</td>
+			<td>@partie.playDate.format("dd MMMM yyyy hh mm")</td>
+			<td>@partie.stadium</td>
+			<td>@helper.form(action =
+				routes.PartienCtrl.updatePartie(partie.pId)) { <input
+				type="submit" value="Update"> }
+			</td>
+			<td>
+				<form action="@routes.PartienCtrl.deletePartie(partie.pId)">
+					<input type="submit" value="Delete" onclick="return confirm('Do you want to delete this match?');">	
+				</form>
+			</td>
+		</tr>
+	}
+</table>
+}
